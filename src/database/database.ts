@@ -15,7 +15,7 @@ export type RoomUserType = {
   index: number;
 };
 
-export class Database {
+class Database {
   players: Player[];
   rooms: Room[];
 
@@ -23,4 +23,13 @@ export class Database {
     this.players = [];
     this.rooms = [];
   }
+
+  public getPlayer = (id: number) => this.players.find((player) => player.playerId === id);
+
+  public addPlayer = (player: Player) => this.players.push(player);
+
+  public addRoom = (id: number, player: Player) =>
+    this.rooms.push({ roomId: id, roomUsers: [{ index: player.playerId, name: player.name }] });
 }
+
+export const database = new Database();

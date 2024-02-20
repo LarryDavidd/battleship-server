@@ -1,12 +1,22 @@
-import Player from '../model/Player';
-import { WebSocketClient } from '../types';
+import { IMessage, WebSocketClient } from '../types';
+import { database } from '../database/database';
 
-export const createRoom = (ws: WebSocketClient) => {
-  const player = this.playerController.getPlayerById(ws.playerId);
-  ws.gameId = this.gameController.createGame(player);
-  const response = this.createResponse(Action.CREATE_GAME, {
-    idGame: ws.gameId,
-    idPlayer: ws.playerId,
-  });
-  ws.send(response);
+export interface ISWMessage {
+  type: string;
+  data: string;
+  id: number;
+}
+
+export const createRoom = (ws: WebSocketClient, _incomingMessage: IMessage) => {
+  const player = database.getPlayer(ws.playerId)!;
+  if (player) {
+    database.addRoom(0, player);
+    const message: ISWMessage = {
+      type: 'update_room',
+      data: JSON.stringify(database.rooms),
+      id: 0,
+    };
+    ws.send(JSON.stringify(message));
+  }
+  console.log(database.players);
 };

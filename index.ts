@@ -17,7 +17,7 @@ const websocketServer = new WebSocketServer({ port: 3000 });
 websocketServer.on('connection', function connection(ws: WebSocketClient) {
   console.log('Client connected');
 
-  ws.on('message', (message) => router(message, ws));
+  ws.on('message', (message) => router(ws, message));
   // function incoming(message) {
   //   console.log('Received: %s', message);
   //   const command: Command = JSON.parse(message.toString());

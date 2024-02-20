@@ -1,4 +1,7 @@
+import { WebSocketClient } from '@/types';
+
 export default class Player {
+  public ws: WebSocketClient;
   public playerId: number;
   public name: string;
   public password: string;

@@ -6,10 +6,10 @@ export type WebSocketClient = WebSocket & {
   playerId: number;
 };
 
-export type RouterType = (incomingMessage: RawData, ws: WebSocketClient) => void;
+export type RouterType = (ws: WebSocketClient, incomingMessage: RawData) => void;
 
 export interface IRoutes {
-  [key: string]: (incomingMessage: IMessage, ws: WebSocketClient) => void;
+  [key: string]: (ws: WebSocketClient, incomingMessage: IMessage) => void;
 }
 
 export interface IMessage {

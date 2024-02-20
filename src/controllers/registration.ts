@@ -1,15 +1,16 @@
+import { database } from '../database/database';
 import Player from '../model/Player';
 import { IMessage, WebSocketClient } from '../types';
 
-const players = [];
-
-export const registration = (message: IMessage, wsClient: WebSocketClient) => {
+export const registration = (wsClient: WebSocketClient, message: IMessage) => {
   const { type, data } = message;
+  console.log(data);
   const { name, password } = data;
 
   const player = new Player(0, name, password);
+  console.log(player);
 
-  players.push(player);
+  database.addPlayer(player);
   const response = JSON.stringify({
     type,
     data: JSON.stringify({
