@@ -1,5 +1,5 @@
-import Player from '@/model/player';
-import { IMessage, WebSocketClient } from '@/types';
+import Player from '../model/Player';
+import { IMessage, WebSocketClient } from '../types';
 
 const players = [];
 

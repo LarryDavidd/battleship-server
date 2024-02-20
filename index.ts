@@ -1,6 +1,7 @@
-import { router } from '@/router/router';
+import { router } from './src/router/router';
 import { httpServer } from './src/http_server';
 import { WebSocketServer } from 'ws';
+import { WebSocketClient } from '@/types';
 // import { randomUUID } from 'crypto';
 
 const HTTP_PORT = 8181;
@@ -13,13 +14,7 @@ console.log(`Start static ws server on the ${WSS_PORT} port!`);
 
 const websocketServer = new WebSocketServer({ port: 3000 });
 
-export type WebSocketClient = WebSocketServer & {
-  socketId: string;
-  gameId: number;
-  playerId: number;
-};
-
-websocketServer.on('connection', function connection(ws) {
+websocketServer.on('connection', function connection(ws: WebSocketClient) {
   console.log('Client connected');
 
   ws.on('message', (message) => router(message, ws));
