@@ -1,4 +1,4 @@
-import { Player } from '../database/database';
+import Player from './Player';
 
 export default class Game {
   public gameId: number;

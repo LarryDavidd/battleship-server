@@ -1,11 +1,5 @@
+import Player from '../model/Player';
 import Game from '../model/Game';
-
-export interface Player {
-  playerId: number;
-  name: string;
-  password: string;
-  wins: number;
-}
 
 export interface Room {
   roomId: number;
@@ -36,6 +30,9 @@ class Database {
     this.rooms.push({ roomId: id, roomUsers: [{ index: player.playerId, name: player.name }] });
 
   public getRoom = (index: number) => this.rooms.find((room) => room.roomId === index);
+
+  public setUserToRoom = (player: Player, indexRoom: number) =>
+    this.rooms.push({ roomId: indexRoom, roomUsers: [{ name: player.name, index: player.playerId }] });
 }
 
 export const database = new Database();
