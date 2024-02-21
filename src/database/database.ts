@@ -24,6 +24,9 @@ class Database {
 
   public getPlayer = (id: number) => this.players.find((player) => player.playerId === id);
 
+  public getPlayerByNamePassword = (name: string, password: string) =>
+    this.players.find((player) => player && player.name === name && player.password === password) || null;
+
   public addPlayer = (player: Player) => this.players.push(player);
 
   public addRoom = (id: number, player: Player) =>
