@@ -14,7 +14,7 @@ export interface IRoutes {
 
 export interface IMessage {
   type: string;
-  data: MessageData;
+  data: string;
   id: number;
 }
 

@@ -4,11 +4,10 @@ import { IMessage, WebSocketClient } from '../types';
 
 export const registration = (wsClient: WebSocketClient, message: IMessage) => {
   const { type, data } = message;
-  console.log(data);
-  const { name, password } = data;
+  const { name, password } = JSON.parse(data);
 
   const player = new Player(0, name, password);
-  console.log(player);
+  wsClient.playerId = 0;
 
   database.addPlayer(player);
   const response = JSON.stringify({
