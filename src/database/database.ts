@@ -51,6 +51,8 @@ class Database {
   public setUserToRoom = (player: Player, indexRoom: number) =>
     this.rooms.push({ roomId: indexRoom, roomUsers: [{ name: player.name, index: player.playerId }] });
 
+  public userInRoom = (index: number, roomId: number) => this.rooms[roomId].roomUsers[0].index === index;
+
   public set setWinner(name: string) {
     const winnerIndex = this.winners.findIndex((winner) => winner && winner.name === name);
     if (winnerIndex === null) this.winners.push({ name: name, wins: 1 });

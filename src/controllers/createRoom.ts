@@ -2,6 +2,7 @@ import { IMessage, WebSocketClient } from '../types';
 import { database } from '../database/database';
 import Game from '../model/Game';
 import Player from '../model/Player';
+import { updateRoomsDataAll } from '../utils/update';
 
 export interface ISWMessage {
   type: string;
@@ -13,13 +14,7 @@ export const createRoom = (ws: WebSocketClient, _incomingMessage: IMessage) => {
   const player = database.getPlayer(ws.playerId)!;
   database.addRoom(0, player);
   ws.gameId = createGame(player);
-  const message: ISWMessage = {
-    type: 'update_room',
-    data: JSON.stringify(database.rooms),
-    id: 0,
-  };
-  ws.send(JSON.stringify(message));
-  // updadeGame()
+  updateRoomsDataAll();
 };
 
 const createGame = (player: Player): number => {
