@@ -1,5 +1,6 @@
 import Player from '../model/Player';
 import Game from '../model/Game';
+import { WebSocketClient } from '../types';
 
 export interface Room {
   roomId: number;
@@ -11,16 +12,29 @@ export type RoomUserType = {
   index: number;
 };
 
+export interface Winner {
+  name: string;
+  wins: number;
+}
+
+export type wsClientsType = Map<number, WebSocketClient>;
+
 class Database {
+  wsClients: wsClientsType;
   players: Player[];
   rooms: Room[];
   games: Game[];
+  winners: Winner[];
 
   constructor() {
+    this.wsClients = new Map();
     this.players = [];
     this.rooms = [];
     this.games = [];
+    this.winners = [];
   }
+
+  public addWsClient = (wsClient: WebSocketClient) => this.wsClients.set(wsClient.playerId, wsClient);
 
   public getPlayer = (id: number) => this.players.find((player) => player.playerId === id);
 
@@ -36,6 +50,16 @@ class Database {
 
   public setUserToRoom = (player: Player, indexRoom: number) =>
     this.rooms.push({ roomId: indexRoom, roomUsers: [{ name: player.name, index: player.playerId }] });
+
+  public set setWinner(name: string) {
+    const winnerIndex = this.winners.findIndex((winner) => winner && winner.name === name);
+    if (winnerIndex === null) this.winners.push({ name: name, wins: 1 });
+    else this.winners[winnerIndex].wins++;
+  }
+
+  public get getWinners() {
+    return this.winners;
+  }
 }
 
 export const database = new Database();
