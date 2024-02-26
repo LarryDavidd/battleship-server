@@ -34,6 +34,8 @@ class Database {
     this.winners = [];
   }
 
+  public getWsClientById = (id: number) => this.wsClients.get(id);
+
   public addWsClient = (wsClient: WebSocketClient) => this.wsClients.set(wsClient.playerId, wsClient);
 
   public getPlayer = (id: number) => this.players.find((player) => player.playerId === id);
@@ -48,8 +50,10 @@ class Database {
 
   public getRoom = (index: number) => this.rooms.find((room) => room.roomId === index);
 
-  public setUserToRoom = (player: Player, indexRoom: number) =>
-    this.rooms.push({ roomId: indexRoom, roomUsers: [{ name: player.name, index: player.playerId }] });
+  public setUserToRoom = (player: Player, indexRoom: number) => {
+    const room = this.getRoom(indexRoom);
+    room?.roomUsers.push({ name: player.name, index: player.playerId });
+  };
 
   public userInRoom = (index: number, roomId: number) => this.rooms[roomId].roomUsers[0].index === index;
 

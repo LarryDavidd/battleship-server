@@ -10,19 +10,22 @@ export const addUserToRoom = (wsClient: WebSocketClient, message: IMessage) => {
   if (!database.userInRoom(player.playerId, indexRoom)) {
     database.setUserToRoom(player, indexRoom);
     createGame(indexRoom);
-    const response = createMessage(
-      'create_game',
-      JSON.stringify({
-        idGame: wsClient.gameId,
-        idPlayer: player.playerId,
-      }),
-    );
-    wsClient.send(response);
   }
 };
 
 const createGame = (indexRoom: number) => {
   const room = database.getRoom(indexRoom);
   const users = room?.roomUsers;
-  users?.forEach((user) => user.index);
+  console.log(users);
+  users?.forEach((user) => {
+    const wsClient: WebSocketClient | undefined = database.getWsClientById(user.index);
+    const response = createMessage(
+      'create_game',
+      JSON.stringify({
+        idGame: wsClient?.gameId,
+        idPlayer: user.index,
+      }),
+    );
+    wsClient?.send(response);
+  });
 };
