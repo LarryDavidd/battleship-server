@@ -1,4 +1,4 @@
-import Player from '../model/Player';
+import Player from '../model/player';
 import Game from '../model/Game';
 import { WebSocketClient } from '../types';
 

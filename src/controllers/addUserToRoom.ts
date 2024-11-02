@@ -1,4 +1,4 @@
-import Player from '../model/Player';
+import Player from '../model/player';
 import { database } from '../database/database';
 import { IMessage, WebSocketClient } from '../types';
 import { createMessage } from '../utils/createMessge';

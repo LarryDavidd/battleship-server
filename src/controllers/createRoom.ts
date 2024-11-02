@@ -1,7 +1,7 @@
-import { IMessage, WebSocketClient } from '../types';
+import { WebSocketClient } from '../types';
 import { database } from '../database/database';
 import Game from '../model/Game';
-import Player from '../model/Player';
+import Player from '../model/player';
 import { updateRoomsDataAll } from '../utils/update';
 
 export interface ISWMessage {
@@ -10,7 +10,7 @@ export interface ISWMessage {
   id: number;
 }
 
-export const createRoom = (ws: WebSocketClient, _incomingMessage: IMessage) => {
+export const createRoom = (ws: WebSocketClient) => {
   const player = database.getPlayer(ws.playerId)!;
   database.addRoom(0, player);
   ws.gameId = createGame(player);

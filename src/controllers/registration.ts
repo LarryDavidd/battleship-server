@@ -1,6 +1,6 @@
 import { createMessage } from '../utils/createMessge';
 import { database } from '../database/database';
-import Player from '../model/Player';
+import Player from '../model/player';
 import { IMessage, WebSocketClient } from '../types';
 import { updateRoomsData, updateWinnersData } from '../utils/update';
 
